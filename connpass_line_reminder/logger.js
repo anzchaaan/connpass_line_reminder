@@ -1,41 +1,55 @@
-/**
- * スプレッドシートの更新などの処理はAPIを叩くため重くなる。
- * なるべくAPIを叩く回数を減らすため配列で格納しておき、必要に応じてcommitする。
- */
-var logArray = [];
 
 /**
- * スプレッドシートに送信するメッセージを配列に格納する。
- * sheet事に格納する。
+ * スプレッドシートにloggを出力するクラス
  */
-function addLog(sheet,log) {
-  if (!logArray[sheet]) {
-    Logger.log('initial');
-    logArray[sheet]=[];
-  }
-  logArray[sheet].push(log);
+SheetLogger = function() {};
+
+/**
+ * 格納してあるLogを出力する
+ */
+SheetLogger.commit = function() {
+  commitSpreadsheet(INI['SEET_NAME']['LOG']);
+};
+
+/**
+ * 各ログレベルでLogを格納する
+ * @var {string} message
+ */
+SheetLogger.debug = function(message) {
+  const loglevel = 'debug';
+  const tsv = [message];
+  tsv.unshift(loglevel);
+  tsv.unshift(new Date());
+  addSpreadsheet(INI['SEET_NAME']['LOG'], tsv);
+}
+SheetLogger.info = function(message) {
+  const loglevel = 'info';
+  const tsv = [message];
+  tsv.unshift(loglevel);
+  tsv.unshift(new Date());
+  addSpreadsheet(INI['SEET_NAME']['LOG'], tsv);
+}
+SheetLogger.warm = function(message) {
+  const loglevel = 'warm';
+  const tsv = [message];
+  tsv.unshift(loglevel);
+  tsv.unshift(new Date());
+  addSpreadsheet(INI['SEET_NAME']['LOG'], tsv);
+}
+SheetLogger.error = function(message) {
+  const loglevel = 'error';
+  const tsv = [message];
+  tsv.unshift(loglevel);
+  tsv.unshift(new Date());
+  addSpreadsheet(INI['SEET_NAME']['LOG'], tsv);
 }
 
 /**
- * メッセージをcommitする。
- */
-function commitLog(sheet) {
-  const spreadsheetId = "";
-  const spreadsheet = SpreadsheetApp.openById(spreadsheetId);
-  const st = spreadsheet.getSheetByName('シート1');
-  
-  const firstRow = st.getLastRow() + 1;
-  const row = logArray[sheet].length;
-  const column = 2;
-  st.getRange(firstRow,1,row,column).setValues(logArray[sheet]);;
+function logtest() {
+  SheetLogger.debug('debugレベルの正常テスト');
+  SheetLogger.info('infoレベルの正常テスト');
+  SheetLogger.warm('warmレベルの正常テスト');
+  SheetLogger.error('errorレベルの正常テスト');
+  SheetLogger.commit();
 }
-
-function test() {
-  addLog('1',['aaa','bbb']);
-  addLog('1',['LOG!','FGO!']);
-  addLog('1',['LOG!','FGO!']);
-  addLog('1',['こいつは表示する!','FGO!']);
-  addLog('2',['こいつは表示しない!','a!']);
-  addLog('1',['LOG!','FGO!']);
-  commitLog('2');
-}
+*/

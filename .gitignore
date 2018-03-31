@@ -12,5 +12,5 @@ node_modules/
 .idea/
 
 # Build directory
-!/connpass_line_reminder
+/connpass_line_reminder/ini.js
 .clasp.json

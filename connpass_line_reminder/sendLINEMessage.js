@@ -8,10 +8,10 @@ sheet = SpreadsheetApp.getActive().getSheetByName('イベント情報');
  * @return {*} 調べてもよくわかんないけどみんなつけてる。responseをjson形式で出力してるのかな？とりあえずおまじない。
  */
 function sendLINEMessaages(to,messages) {
-  UrlFetchApp.fetch(ini('LINE_MESSAGE_PUSH_URL'), {
+  UrlFetchApp.fetch(ini['LINE_MESSAGE_PUSH_URL'], {
     'headers': {
       'Content-Type': 'application/json; charset=UTF-8',
-      'Authorization': 'Bearer ' + ini('LINE_CHANNEL_ACCESS_TOKEN'),
+      'Authorization': 'Bearer ' + ini['LINE_CHANNEL_ACCESS_TOKEN'],
     },
     'method': 'post',
     'payload': JSON.stringify({

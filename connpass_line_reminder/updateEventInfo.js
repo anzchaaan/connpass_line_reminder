@@ -10,7 +10,7 @@ function updateEventInfo() {
  * connpassのAPIを叩いてイベント情報を取得する。
  */
 function getConnpassEventJson() {
-  const apiURL = createConnpassApiURL(ini('CONNPASS_SERIES_ID_TO_ACQUIRE'));
+  const apiURL = createConnpassApiURL(ini['CONNPASS_SERIES_ID_TO_ACQUIRE']);
   const apiOption = {
     'method' : 'get',
     'contentType' : 'application/json; charset=utf-8'
@@ -43,7 +43,7 @@ function createConnpassApiURL(series_id) {
   searchOption += '&ym=' + ym; // 今月と来月を検索条件に。jsの日付関連、魔境過ぎない？
   
   // URLを結合し、返す。
-  const apiUrl = ini('CONNPASS_API_EVENT_URL') + searchOption;
+  const apiUrl = ini['CONNPASS_API_EVENT_URL'] + searchOption;
   return apiUrl;
 }
 
