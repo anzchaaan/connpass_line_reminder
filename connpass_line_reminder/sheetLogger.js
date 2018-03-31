@@ -1,6 +1,6 @@
 
 /**
- * スプレッドシートにloggを出力するクラス
+ * スプレッドシートにlogを出力するクラス
  */
 SheetLogger = function() {};
 
@@ -8,7 +8,7 @@ SheetLogger = function() {};
  * 格納してあるLogを出力する
  */
 SheetLogger.commit = function() {
-  commitSpreadsheet(INI['SEET_NAME']['LOG']);
+  WriteSheet.commit(INI['SEET_NAME']['LOG']);
 };
 
 /**
@@ -20,28 +20,28 @@ SheetLogger.debug = function(message) {
   const tsv = [message];
   tsv.unshift(loglevel);
   tsv.unshift(new Date());
-  addSpreadsheet(INI['SEET_NAME']['LOG'], tsv);
+  WriteSheet.add(INI['SEET_NAME']['LOG'], tsv);
 }
 SheetLogger.info = function(message) {
   const loglevel = 'info';
   const tsv = [message];
   tsv.unshift(loglevel);
   tsv.unshift(new Date());
-  addSpreadsheet(INI['SEET_NAME']['LOG'], tsv);
+  WriteSheet.add(INI['SEET_NAME']['LOG'], tsv);
 }
 SheetLogger.warm = function(message) {
   const loglevel = 'warm';
   const tsv = [message];
   tsv.unshift(loglevel);
   tsv.unshift(new Date());
-  addSpreadsheet(INI['SEET_NAME']['LOG'], tsv);
+  WriteSheet.add(INI['SEET_NAME']['LOG'], tsv);
 }
 SheetLogger.error = function(message) {
   const loglevel = 'error';
   const tsv = [message];
   tsv.unshift(loglevel);
   tsv.unshift(new Date());
-  addSpreadsheet(INI['SEET_NAME']['LOG'], tsv);
+  WriteSheet.add(INI['SEET_NAME']['LOG'], tsv);
 }
 
 /**
