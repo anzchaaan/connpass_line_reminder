@@ -25,9 +25,21 @@ WriteSheet.add = function(sheetName, tsv) {
  * @var {string} sheetName
  */
 WriteSheet.commit = function(sheetName) {
+  if (!spreadsheetArray[sheetName]) {
+    return;
+  }
   const sheet = SpreadsheetApp.getActive().getSheetByName(sheetName);
   const row = spreadsheetArray[sheetName].length;
   const column = spreadsheetArray[sheetName][0].length;
   sheet.insertRowsAfter(1, row);
   sheet.getRange(2,1,row,column).setValues(spreadsheetArray[sheetName]);
+  spreadsheetArray[sheetName] = [];
+}
+
+/**
+ * 新規シートを作成する。
+ * @var {string} sheetName
+ */
+WriteSheet.insertSheet = function(sheetName) {
+  SpreadsheetApp.insertSheet(sheetName);
 }

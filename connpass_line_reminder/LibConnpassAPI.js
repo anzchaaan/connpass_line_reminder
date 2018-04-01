@@ -38,12 +38,11 @@ LibConnnpassAPI.createURL = function(series_id) {
   const nextDate = new Date(currntDate.getFullYear(), currntDate.getMonth()+1, 1);
   const currentYearMonth = String(currntDate.getFullYear()) + String(currntDate.getMonth()+1);
   const nextYearMonth = String(nextDate.getFullYear()) + String(nextDate.getMonth()+1);
-  
+
   const ym = currentYearMonth + ',' + nextYearMonth; 
   searchOption += '&ym=' + ym; // 今月と来月を検索条件に。jsの日付関連、魔境過ぎない？
 
   const apiUrl = INI['CONNPASS_API_EVENT_URL'] + searchOption;
-  Logger.log(apiUrl);
   return apiUrl;
 }
 
@@ -55,13 +54,16 @@ LibConnnpassAPI.createURL = function(series_id) {
  */
 LibConnnpassAPI.updateSheet = function(series_id, eventJson) {
   const jsonkeys = ['event_id','started_at','title','catch','address','event_url','owner_nickname'];;
-  
+  eventList = LibCommon.getEventList(series_id);
+
   eventJson.events.forEach(function(eventJson){
-    eventInfo = [];
-    jsonkeys.forEach(function(key){
-      eventInfo.push(eventJson[key]);
-    });
-    WriteSheet.add(series_id, eventInfo)
+    if (String(eventList).indexOf(eventJson['event_id']) == -1) {  
+      eventInfo = [];
+      jsonkeys.forEach(function(key){
+        eventInfo.push(eventJson[key]);
+      });
+      WriteSheet.add(series_id, eventInfo)
+    }
   });
 
   WriteSheet.commit(series_id)
